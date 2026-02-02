@@ -9,6 +9,105 @@ namespace godrokotthon
 {
     internal class Program
     {
+        static (int,int) elejevege(int hely, List<int> melysegek) {
+            int i = hely;
+            int j = hely;
+            int kezdoi;
+            int vegei;
+            while (melysegek[i] != 0 && i > 0)
+            {
+                i--;
+
+            }
+
+
+            if (i!=0)
+            {
+
+            kezdoi = i + 1;
+            }
+            else
+            {
+                kezdoi = i;
+            }
+            Console.WriteLine("A godor kezdete " + kezdoi);
+            while (melysegek[j] != 0 && j < melysegek.Count - 1)
+            {
+                j++;
+
+            }
+            if (j!=melysegek.Count-1)
+            {
+
+            vegei = j - 1;
+            }
+            else
+            {
+                vegei = j;
+            }
+            return(kezdoi, vegei);
+        }
+        static (int,int) legmelyebb_pont(int hely,List<int >melysegek) { int max = melysegek[hely];int maxhely = hely;
+            
+            for (int i = elejevege(hely, melysegek).Item1; i < elejevege(hely,melysegek).Item2-elejevege(hely,melysegek).Item1; i++)
+            {
+                if (melysegek[i] < max)
+                {
+                    max = melysegek[i];
+                    maxhely = i;
+
+                }
+            }
+
+
+
+
+ return (max,maxhely);
+        }//feltetelezzuk hogy godrot t ad mega felhasznalo
+        static bool monoton(int hely, List<int> melysegek) { bool vege = true;
+
+            for (int i = elejevege(hely,melysegek).Item1+1; i < (legmelyebb_pont(hely,melysegek).Item2-elejevege(hely, melysegek).Item1)-1; i++)
+            {
+                if (!(melysegek[i] > melysegek[i-1]))
+                {
+                    vege = false;
+                }
+            }
+            for (int i = legmelyebb_pont(hely, melysegek).Item2 + 1; i < (elejevege(hely, melysegek).Item1-legmelyebb_pont(hely, melysegek).Item2)-1; i++)
+            {
+                if (!(melysegek[i] <melysegek[i - 1]))
+                {
+                    vege = false;
+                }
+            }
+
+
+            return vege;
+        }
+        static int godorterfogat(int hely, List<int> melysegek)
+        {
+            int vege = 0; for (int i = elejevege(hely, melysegek).Item1; i < elejevege(hely,melysegek).Item2- elejevege(hely, melysegek).Item1; i++)
+            {
+                vege = vege + (melysegek[i] * 10);
+            } return vege;
+        }
+        static int vizbefogadas(int hely, List<int> melysegek) { int vege = 0;
+
+            for (int i = elejevege(hely, melysegek).Item1; i < elejevege(hely, melysegek).Item2 - elejevege(hely, melysegek).Item1; i++)
+            {
+                if (melysegek[i]>1)
+                {
+                    vege = vege + ((melysegek[i] - 1) * 10);
+                }
+            }
+
+
+
+
+
+
+
+                return vege; }
         static void Main(string[] args)
         {
             string[] fájl = File.ReadAllLines("melyseg.txt");
@@ -64,14 +163,15 @@ namespace godrokotthon
 
                 }kezdoi = i+1;
                 Console.WriteLine("A godor kezdete "+kezdoi);
-                while (melysegek[j]!=0)
+                while (melysegek[j]!=0&&j<melysegek.Count-1)
                 {
                     j++;
 
                 }
-                vegei = j; Console.WriteLine("A godor vege: "+vegei);
+                vegei = j-1; Console.WriteLine("A godor vege: "+vegei);
             }
-            Console.WriteLine();
+            Console.WriteLine("A godor legmelyebb pontja"+legmelyebb_pont(hely,melysegek));
+
 
 
 
