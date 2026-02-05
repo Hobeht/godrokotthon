@@ -108,6 +108,12 @@ namespace godrokotthon
 
 
                 return vege; }
+
+
+
+
+        
+
         static void Main(string[] args)
         {
             string[] fájl = File.ReadAllLines("melyseg.txt");
@@ -133,18 +139,21 @@ namespace godrokotthon
             int erintetlenszazalek = erintetlen / (melysegek.Count / 100);
             Console.WriteLine(erintetlenszazalek + "%");
             Console.WriteLine("4.");
-            //using (StreamWriter iro = new StreamWriter("godrok.txt", Encoding="UTF-8")) { }
             int darab = 0;
-            if (melysegek[0] > 0) { darab++; }
-            for (int i = 0; i < melysegek.Count; i++)
+            using (StreamWriter iro = new StreamWriter("godrok.txt"))
             {
                 
-                if (melysegek[i] > 0 && (melysegek[i - 1]) == 0 && i > 0)
+                if (melysegek[0] > 0) { darab++; }
+                for (int i = 0; i < melysegek.Count; i++)
                 {
-                    Console.WriteLine();
-                    darab++;
+
+                    if (melysegek[i] > 0 && (melysegek[i - 1]) == 0 && i > 0)
+                    {
+                        iro.WriteLine();
+                        darab++;
+                    }
+                    if (melysegek[i] != 0) { iro.Write(melysegek[i]); }
                 }
-                if(melysegek[i] != 0) { Console.Write(melysegek[i]); }
             }
             Console.WriteLine("5. Godrok szama: "+darab);
             Console.WriteLine("6. ");
